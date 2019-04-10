@@ -1,6 +1,10 @@
 module FrontEndBuilds
   class ApplicationController < ActionController::Base
 
+    protect_from_forgery with: :null_session, if: (proc do |c|
+      c.request.format.include? 'application/json'
+    end)
+
     # Public: A quick helper to create a respond_to block for
     # returning json to the client. Used because `respond_with`
     # is no longer included in Rails.
